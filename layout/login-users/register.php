@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo '<div class="row">
                 <div class="col-md-8 offset-md-2">
                   <div class="alert alert-danger" role="alert">Email already exists. Please choose a different email.</div>
-                  <a class="btn btn-danger" href="http://localhost/e-shop/layout/login/register.php">back to register </a>
+                  <a class="btn btn-danger" href="http://localhost/e-shop/e-shop/layout/login/register.php">back to register </a>
                 </div>
               </div>';
         exit();  
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo '<div class="row">
                 <div class="col-md-8 offset-md-2">
                     <div class="alert alert-danger" role="alert">Image already exists. Please choose a different image.</div>
-                    <a class="btn btn-danger" href="http://localhost/e-shop/layout/login/register.php">back to register </a>
+                    <a class="btn btn-danger" href="http://localhost/e-shop/e-shop/layout/login/register.php">back to register </a>
                   </div>
               </div>';
         exit();  
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo '<div class="row">
                 <div class="col-md-8 offset-md-2">
                     <div class="alert alert-danger" role="alert">Password should be at least 8 characters long.</div>
-                    <a class="btn btn-danger" href="http://localhost/e-shop/layout/login/register.php">back to register </a>
+                    <a class="btn btn-danger" href="http://localhost/e-shop/e-shop/layout/login/register.php">back to register </a>
                 </div>
               </div>';
         exit();  

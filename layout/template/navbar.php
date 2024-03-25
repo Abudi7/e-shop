@@ -1,26 +1,37 @@
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container">
-    <a class="navbar-brand" href="http://localhost/e-shop/layout/template/main.php">E-Shop</a>
+    <a class="navbar-brand" href="http://localhost/e-shop/e-shop/layout/template/main.php">E-Shop</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="nav justify-content-end">
     <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="http://localhost/e-shop/layout/template/main.php">Home</a>
+        <a class="nav-link active" aria-current="page" href="http://localhost/e-shop/e-shop/layout/template/main.php">Home</a>
       </li>
       <li class="nav-item">
-      <a class="nav-link active" aria-current="page" href="http://localhost/e-shop/layout/products/product.php">Products</a>
+        <?php
+       session_start();
+      //  var_dump($_SESSION);
+        // Check if the user is logged in and has the role of admin
+        if (isset($_SESSION['role']) && $_SESSION['role'] === "Role['admin']") {
+          // Include the product for admin
+
+          echo '<a class="nav-link active" aria-current="page" href="http://localhost/e-shop/e-shop/layout/products/product.php">Products</a>';
+        } else {
+          
+        } 
+        ?>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#"><i class="fa fa-cart-plus"></i></a>
       </li>
       <li class="nav-item">
         <?php 
-         session_start();
+         
           if (isset($_SESSION["firstname"]) != null) {
-            echo '<a class="nav-link" href="http://localhost/e-shop/layout/login-users/logout.php">logout</a>';
+            echo '<a class="nav-link" href="http://localhost/e-shop/e-shop/layout/login-users/logout.php">logout</a>';
           } else {
-            echo '<a class="nav-link" href="http://localhost/e-shop/layout/login-users/login.php"><i class="fa fa-user"></i></a>';
+            echo '<a class="nav-link" href="http://localhost/e-shop/e-shop/layout/login-users/login.php"><i class="fa fa-user"></i></a>';
           }
         ?>
       </li>
@@ -35,8 +46,8 @@
             echo $_SESSION["firstname"];
             echo '</a>';
               echo '<ul class="dropdown-menu" aria-labelledby="userDropdown">';
-                    echo '<li><a class="dropdown-item" href="http://localhost/e-shop/layout/users/edit.php?id=' . $_SESSION["id"] . '">Edit</a></li>';
-                    echo '<li><a class="dropdown-item" href="http://localhost/e-shop/layout/users/profile.php?id=' . $_SESSION["id"] . '">Profile</a></li>';
+                    echo '<li><a class="dropdown-item" href="http://localhost/e-shop/e-shop/layout/users/edit.php?id=' . $_SESSION["id"] . '">Edit</a></li>';
+                    echo '<li><a class="dropdown-item" href="http://localhost/e-shop/e-shop/layout/users/profile.php?id=' . $_SESSION["id"] . '">Profile</a></li>';
               echo '</ul>';
           }
         ?>

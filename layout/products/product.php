@@ -1,4 +1,11 @@
 <?php
+     //(!isset($_SESSION['role']) || (isset($_SESSION['role']) && $_SESSION['role'] !== "Role['admin']"))
+  if ((!isset($_SESSION['role']) || $_SESSION['role'] !== "Role['admin']")) {
+    // Redirect securely using header()
+    header("Location: http://localhost/e-shop/e-shop/layout/template/main.php");
+  }
+?>
+<?php
 require('../template/header.php');
 require('../../config/datasBase.php');
 
@@ -8,17 +15,16 @@ $stmt->execute();
 $products = $stmt->fetchAll();
 ?>
 <div class="col-md-12 mt-4 p-4">
-<?php
-  if (isset($_SESSION['role']) === "Role['admin']") {
-?>
+
 <div class="container">
-  <h2 class="bg-primary  text-light rounded text-center mt-3"> Product Dashbord </h2>
   <div class="row">
-    
-      
+    <div class="col-md-12">
+      <h2 class="bg-primary  text-light rounded text-center mt-3"> Product Dashbord </h2>
+    </div>
+  </div>
       <div class="row mb-2 text-end">
         <div class="col-md-12">
-          <a class="btn btn-primary" href="http://localhost/e-shop/layout/products/addProduct.php" role="button">Add
+          <a class="btn btn-primary" href="http://localhost/e-shop/e-shop/layout/products/addProduct.php" role="button">Add
             Product</a>
         </div>
       </div>
@@ -68,10 +74,6 @@ $products = $stmt->fetchAll();
           <?php } ?>
         </tbody>
       </table>
-      <?php
-        }
-
-      ?>
     </div>
   </div>
 </div>

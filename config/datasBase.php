@@ -2,7 +2,7 @@
 
 // create a database configeration
 define('DATA_SERVER','localhost');
-define('DATA_USERNAME','admin');
+define('DATA_USERNAME','eshop');
 define('DATA_DATABASE','onlineshop');
 define('DATA_PSSWORD','pw');
 define('DATA_CHARSET','utf8');

@@ -9,13 +9,6 @@
 </head>
 <body>
 <?php
-// Check if the user is logged in and has the role of admin
-if (isset($_SESSION['role']) && $_SESSION['role'] === "Role['admin']") {
-    // Include the navbar for admin
-    include "navbar.php";
-} else {
-    // Include the navbar for regular users
-    include "navbarUser.php";
-}
+require('../template/navbar.php');
 ?>
 

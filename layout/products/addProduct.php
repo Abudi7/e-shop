@@ -3,6 +3,7 @@ require('../template/header.php');
 require('../../config/datasBase.php');
 
 if(isset($_POST['submit'])) {
+  $userId = $_SESSION['id'];
   $productsName = $_POST['productName'];
   $productsContent = $_POST['productContent'];
   $productsPrice = $_POST['productPrice'];
@@ -26,9 +27,9 @@ if(isset($_POST['submit'])) {
 
   if (in_array($imageExtension, $validImage)) {
     if (move_uploaded_file($tempProductsImage, $targetFile)) {
-      $sql = "INSERT INTO products(name,content,price,created,img) VALUES(?,?,?,?,?)";
+      $sql = "INSERT INTO products(name,content,price,created,img,user_id) VALUES(?,?,?,?,?,?)";
       $stmt = $db->prepare($sql);
-      $stmt->execute(array($productsName,$productsContent,$productsPrice,$productsCreated,$productsImageName));
+      $stmt->execute(array($productsName,$productsContent,$productsPrice,$productsCreated,$productsImageName,$userId));
       echo '<div class="container"><div class="row"><div class="alert alert-success" role="alert">
               Success you have added a new Product.
             </div></div></div>';

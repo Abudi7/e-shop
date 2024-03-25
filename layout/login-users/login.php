@@ -16,7 +16,7 @@
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    $stmt = $db->prepare("SELECT id,firstname,lastname,email,password,phone,address,img FROM users WHERE email=:email");
+    $stmt = $db->prepare("SELECT id,firstname,lastname,email,password,phone,address,img,role FROM users WHERE email=:email");
     $stmt->bindParam(":email", $email);
     $stmt->execute();
     $userExists = $stmt->fetch();
@@ -32,7 +32,7 @@
       $_SESSION['role'] = $userExists['role'];
       
       // Redirect securely using header()
-      header("Location: http://localhost/e-shop/layout/template/main.php");
+      header("Location: http://localhost/e-shop/e-shop/layout/template/main.php");
       exit(); // Halt execution
     } else {
       echo "Login is not success";

@@ -17,6 +17,7 @@ $user = $stmt->fetch();
     $lastname = $_POST['lastname'];
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $password = password_hash($password,PASSWORD_DEFAULT);
     $address = $_POST['address'];
     $phone = $_POST['phone'];
     
