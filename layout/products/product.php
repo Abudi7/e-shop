@@ -1,13 +1,14 @@
 <?php
      //(!isset($_SESSION['role']) || (isset($_SESSION['role']) && $_SESSION['role'] !== "Role['admin']"))
-  if ((!isset($_SESSION['role']) || $_SESSION['role'] !== "Role['admin']")) {
+  if ((isset($_SESSION['role']) && $_SESSION['role'] !== "Role['admin']")) {
     // Redirect securely using header()
     header("Location: http://localhost/e-shop/e-shop/layout/template/main.php");
-  }
+  }else {
+
+  
 ?>
 <?php
 require('../template/header.php');
-require('../../config/datasBase.php');
 
 $sql = "SELECT * FROM products";
 $stmt = $db->prepare($sql);
@@ -71,7 +72,7 @@ $products = $stmt->fetchAll();
                 </span>
               </td>
             </tr>
-          <?php } ?>
+          <?php } } ?>
         </tbody>
       </table>
     </div>

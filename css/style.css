@@ -1,0 +1,41 @@
+#notification-number {
+  position: absolute; /* Position the number on top of the cart icon */
+  top: -5px; /* Adjust the vertical offset as needed */
+  right: -5px; /* Adjust the horizontal offset as desired */
+  width: 20px; /* Set the width of the notification number */
+  height: 20px; /* Set the height of the notification number */
+  border-radius: 50%; /* Create a circular shape */
+  background-color: red; /* Set the background color to indicate notification */
+  color: white; /* Set the text color for visibility */
+  text-align: center; /* Center the text within the number */
+  font-size: 12px; /* Adjust the font size for readability */
+  animation: notification-pulse 1s infinite ease-in-out; /* Apply the animation */
+}
+.nav-item {
+  position: relative; /* Enable positioning for the notification number */
+}
+
+
+/* Sidebar Right */
+.modal.sidebar-right .modal-dialog {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 320px; /* Adjust width as needed */
+  margin: 0;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.modal.sidebar-right.show .modal-dialog {
+  transform: translateX(0);
+}
+.modal.sidebar-right .modal-content {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.modal.fade:not(.show).sidebar-right .modal-dialog {
+  transform: translateX(100%);
+}
