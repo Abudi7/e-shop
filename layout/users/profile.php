@@ -16,12 +16,9 @@ $user = $stmt->fetch();
   <div class="row mt-2">
     <div class="col-md-6 offset-md-3">
       <div class="card">
-        <img src="../../image/<?= $user['img'] ?>" class="card-img-top rounded-circle mx-auto d-block mt-4" style="width: 150px; height: 150px;" alt="<?= $user['firstname'] ?>'s Profile Picture">
         <div class="card-body">
           <h5 class="card-title text-center"><?= $user['firstname'] ?> <?= $user['lastname'] ?></h5>
           <p class="card-text"><strong>Email:</strong> <?= $user['email'] ?></p>
-          <p class="card-text"><strong>Phone:</strong> <?= $user['phone'] ?></p>
-          <p class="card-text"><strong>Address:</strong> <?= $user['address'] ?></p>
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@ session_start();
 if (isset($_POST['addToCart'])) {
   $userId = $_SESSION['id'];
   if (!$userId) {
-    header("Location: http://localhost/e-shop/e-shop/layout/template/main.php");
+    header("Location: ../template/main.php");
       // Redirect or display an error message
       exit("User not authenticated"); 
   }
@@ -33,7 +33,7 @@ if (isset($_POST['addToCart'])) {
   }
   
   // Redirect securely using header()
-  header("Location: http://localhost/e-shop/e-shop/layout/template/main.php");
+  header("Location: ../template/main.php");
   exit();
 }
 

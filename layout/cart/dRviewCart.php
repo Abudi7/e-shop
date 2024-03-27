@@ -7,7 +7,7 @@ if (isset($_POST['deleteCart'])) {
     $stmt->execute();
 
     // Redirect securely using header()
-    header("Location: http://localhost/e-shop/e-shop/layout/cart/viewCart.php");
+    header("Location: ../template/main.php");
     exit(); // Halt execution
     
 }
