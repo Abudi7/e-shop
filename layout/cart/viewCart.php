@@ -39,3 +39,4 @@ $viewCarts = $stmt->fetchAll();
     </div>
 </div>
 
+<?php require('../template/footer.php') ?>

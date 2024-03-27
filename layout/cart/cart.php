@@ -69,6 +69,18 @@ function getTotal() {
   }
    return $result;
 }
+
+//checkout method for name x mount
+function getCheckout(){
+  require('../../config/datasBase.php');
+  $sql ="SELECT cart.amount, products.name
+          FROM cart 
+          INNER JOIN products ON cart.product_Id = products.id";
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
+  $checkout = $stmt->fetch();
+  
+} 
 ?>
 
 
