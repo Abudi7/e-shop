@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
 
   // Check if the image is valid
   if (in_array($imageExtension, $validImage)) {
-    // Move the uploaded file to the target directory
+    // Move the uploaded file to the Product-image
     if (move_uploaded_file($tempProductsImage, $targetFile)) {
       // Prepare and execute the SQL update query
       $sql = "UPDATE products SET name = :name, content = :content, price = :price, created = :created, img = :img WHERE id = :id";
@@ -40,9 +40,9 @@ if (isset($_POST['submit'])) {
       $stmt->bindParam(':id', $id);
 
       if ($stmt->execute()) {
-        // If the update is successful, redirect to product.php
+        // redirect to product.php
         header('Location: product.php');
-        exit; // Stop further execution of the script
+        exit; 
       } else {
         echo '<div class="alert alert-danger" role="alert">
                 Failed to update the product.
