@@ -1,6 +1,4 @@
 <?php 
-
-require('../../config/datasBase.php');
 session_start();
 
 if (isset($_POST['addToCart'])) {
@@ -40,8 +38,7 @@ if (isset($_POST['addToCart'])) {
 }
 
 //count Cart id 
-function getCountId() {
-  require('../../config/datasBase.php');
+function getCountId($db) {
   $userId = $_SESSION['id'];
   if($userId) {
     $sql = "SELECT COUNT(id) As countCart FROM cart where user_id = ? ";
@@ -55,8 +52,7 @@ function getCountId() {
 }
 
 //total price function 
-function getTotal() {
-  require('../../config/datasBase.php');
+function getTotal($db) {
   $sql ="SELECT cart.amount, products.price
           FROM cart 
           INNER JOIN products ON cart.product_Id = products.id";
@@ -71,8 +67,7 @@ function getTotal() {
 }
 
 //checkout method for name x mount
-function getCheckout(){
-  require('../../config/datasBase.php');
+function getCheckout($db){
   $sql ="SELECT cart.amount, products.name
           FROM cart 
           INNER JOIN products ON cart.product_Id = products.id";

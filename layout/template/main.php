@@ -1,6 +1,5 @@
 <?php
-session_start();
-include "header.php";
+require('header.php');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 $sql = "SELECT * FROM products";
@@ -36,7 +35,6 @@ $products = $stmt->fetchAll();
     </div>
   </div>
 </section>
-<?php
-//var_dump($_SESSION['cart']); 
+<?php 
 ?>
 <?php include "footer.php"; ?>

@@ -75,7 +75,7 @@ require('../template/header.php');
               <p>Total</p>
             </div>
             <div class="col-md-6 text-end">
-            <?= getTotal() ?>$
+            <?= getTotal($db) ?>$
             </div>
           </div>
           <hr>
@@ -93,7 +93,7 @@ require('../template/header.php');
               <p>Total</p>
             </div>
             <div class="col-md-6 text-end">
-            <?= getTotal() ?>$
+            <?= getTotal($db) ?>$
             </div>
           </div>
           <div class="row">

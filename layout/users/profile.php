@@ -1,6 +1,5 @@
 <?php
 require('../template/header.php');
-require('../../config/datasBase.php'); 
 $id = $_REQUEST['id'];
 $sql = "SELECT * FROM users where id='".$id."'";
 $stmt = $db->prepare($sql);

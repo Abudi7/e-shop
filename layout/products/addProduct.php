@@ -1,6 +1,6 @@
 <?php
 require('../template/header.php');
-require('../../config/datasBase.php');
+
 
 if(isset($_POST['submit'])) {
   $userId = $_SESSION['id'];

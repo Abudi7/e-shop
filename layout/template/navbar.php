@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container">
     <a class="navbar-brand" href="http://localhost/e-shop/e-shop/layout/template/main.php">E-Shop</a>
@@ -10,25 +11,21 @@
       </li>
       <li class="nav-item">
         <?php
-       session_start();
-      //  var_dump($_SESSION);
-        // Check if the user is logged in and has the role of admin
-        if (isset($_SESSION['role']) && $_SESSION['role'] === "Role['admin']") {
-          // Include the product for admin
+      //   // Check if the user is logged in and has the role of admin
+      //   if (isset($_SESSION['role']) && $_SESSION['role'] === "Role['admin']") {
+      //     // Include the product for admin
 
-          echo '<a class="nav-link active" aria-current="page" href="http://localhost/e-shop/e-shop/layout/products/product.php">Products</a>';
-        } else {
-          
-        } 
-        ?>
-      </li>
+      //     echo '<a class="nav-link active" aria-current="page" href="http://localhost/e-shop/e-shop/layout/products/product.php">Products</a>';
+      //   } 
+      //   ?>
+       </li>
       <li class="nav-item">
         <?php 
          
           if (isset($_SESSION["firstname"]) != null) {
-            echo '<a class="nav-link" href="http://localhost/e-shop/e-shop/layout/login-users/logout.php">logout</a>';
+            echo '<a class="nav-link" href="../login-users/logout.php">logout</a>';
           } else {
-            echo '<a class="nav-link" href="http://localhost/e-shop/e-shop/layout/login-users/login.php"><i class="fa fa-user"></i></a>';
+            echo '<a class="nav-link" href="../login-users/login.php"><i class="fa fa-user"></i></a>';
           }
         ?>
       </li>
@@ -39,7 +36,7 @@
         <?php 
           if (isset($_SESSION["firstname"])) {
             echo '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">';
-            echo '<img src="../../image/' . $_SESSION["img"] . '" alt="' . $_SESSION["firstname"] . '" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 5px;">';
+            #echo '<img src="../../image/' . $_SESSION["img"] . '" alt="' . $_SESSION["firstname"] . '" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 5px;">';
             echo $_SESSION["firstname"];
             echo '</a>';
               echo '<ul class="dropdown-menu" aria-labelledby="userDropdown">';
@@ -54,7 +51,7 @@
           <a class="nav-link position-relative" href="#" data-bs-toggle="modal" data-bs-target="#shoppingCartModal">
               <i class="fa fa-cart-plus"></i>
               <span id="notification-number">
-                  <?php require_once('../cart/cart.php'); getCountId(); ?>
+                  <?php require_once('../cart/cart.php'); getCountId($db); ?>
               </span>
           </a>
           <div class="modal fade sidebar-right" id="shoppingCartModal" tabindex="-1" aria-labelledby="shoppingCartModalLabel" aria-hidden="true">
@@ -94,7 +91,7 @@
                           </div>
                         <?php }?>
                       </div>
-                      <p class="border-top m-2">Subtotal: <span style="float: right;"><?= getTotal() ?>$</span></p>
+                      <p class="border-top m-2">Subtotal: <span style="float: right;"><?= getTotal($db) ?>$</span></p>
                       <div class="modal-footer">
                           <a href="../cart/checkout.php" class="btn btn-primary btn-sm">Checkout</a>
                           <a href="../cart/viewCart.php" class="btn btn-primary btn-sm">View Cart</a>
