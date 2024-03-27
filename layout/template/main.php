@@ -21,7 +21,7 @@ $products = $stmt->fetchAll();
             </div>
             <img src="../products/products-Image/<?= $product['img'] ?>" class="card-img-top img-fluid" alt="<?= $product['name'] ?>">
             <div class="card-body">
-              <p class="card-text">
+              <p class="card-text d-inline-block text-truncate" style="max-width: 150px;">
                 <?= $product['content']; ?>
               </p>
               <p>
