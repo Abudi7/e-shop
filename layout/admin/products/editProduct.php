@@ -1,5 +1,6 @@
 <?php 
-require('../template/header.php');
+require('../../template/headerAdmin.php');
+require('../../../config/datasBase.php');
 
 $id = $_REQUEST['id'];
 $sql = "SELECT * FROM products where id='".$id."'";

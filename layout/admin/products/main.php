@@ -1,5 +1,6 @@
 <?php
-require('header.php');
+require('../../template/headerAdmin.php');
+require('../../../config/datasBase.php');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 $sql = "SELECT * FROM products";
@@ -18,7 +19,7 @@ $products = $stmt->fetchAll();
             <div class="card-header" name="name">
             <?= $product['name']; ?>
             </div>
-            <img src="../admin/products/products-Image/<?= $product['img'] ?>" class="card-img-top img-fluid" alt="<?= $product['name'] ?>">
+            <img src="../products/products-Image/<?= $product['img'] ?>" class="card-img-top img-fluid" alt="<?= $product['name'] ?>">
             <div class="card-body">
               <p class="card-text d-inline-block text-truncate" style="max-width: 150px;">
                 <?= $product['content']; ?>
@@ -37,4 +38,4 @@ $products = $stmt->fetchAll();
 </section>
 <?php 
 ?>
-<?php include "footer.php"; ?>
+<?php require('../../template/footer.php'); ?>

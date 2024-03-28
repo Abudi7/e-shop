@@ -23,9 +23,9 @@
         <?php 
          
           if (isset($_SESSION["firstname"]) != null) {
-            echo '<a class="nav-link" href="../login-users/logout.php">logout</a>';
+            echo '<a class="nav-link" href="../login/logout.php">logout</a>';
           } else {
-            echo '<a class="nav-link" href="../login-users/login.php"><i class="fa fa-user"></i></a>';
+            echo '<a class="nav-link" href="../login/login.php"><i class="fa fa-user"></i></a>';
           }
         ?>
       </li>

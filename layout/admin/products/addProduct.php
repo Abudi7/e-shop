@@ -1,7 +1,6 @@
 <?php
-require('../template/header.php');
-
-
+require('../../template/headerAdmin.php');
+require('../../../config/datasBase.php');
 if(isset($_POST['submit'])) {
   $userId = $_SESSION['id'];
   $productsName = $_POST['productName'];
@@ -33,6 +32,7 @@ if(isset($_POST['submit'])) {
       echo '<div class="container"><div class="row"><div class="alert alert-success" role="alert">
               Success you have added a new Product.
             </div></div></div>';
+            header('Location: product.php');
     } else {
       echo '<div class="container"><div class="row"><div class="alert alert-danger" role="alert">
          Failed to upload the image.

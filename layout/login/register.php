@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lastName = $_POST['lastname'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $roleUser = "Role['user']";
+    $roleUser = "customer";
 
     // Check if any field is empty
     if (empty($firstName) || empty($lastName) || empty($email) || empty($password)) {

@@ -1,4 +1,5 @@
-<?php include "../template/header.php"; ?>
+<?php include "../template/header.php";?>
+
 <div class="container">
     <h2 class="bg-primary text-light rounded text-center mt-3">E-Shop Login Page</h2>
 
@@ -24,9 +25,16 @@
                 // Password is correct, set session variables
                 $_SESSION['firstname'] = $userExists['firstname'];
                 $_SESSION['id'] = $userExists['id'];
+                $_SESSION['role'] = $userExists['role'];
+
+                if ($userExists['role'] === "admin") {
+                  header('Location: ../admin/products/product.php');
+                  exit();
+                }else{
                 // Redirect to main.php
                 header('Location: ../template/main.php');
                 exit();
+              }
             } else {
                 echo '<div class="alert alert-danger" role="alert">Incorrect password.</div>';
             }
