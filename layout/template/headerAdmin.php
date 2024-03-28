@@ -10,13 +10,31 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
 
+    <style>
+    /* Reduce margin for body */
+    body {
+        margin-top: 0;
+    }
+
+    /* Reduce padding for navbar */
+    .navbar {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    /* Reduce margin for container inside navbar */
+    .navbar .container {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+</style>
     
 </head>
 
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="margin-bottom: 0;">
         <div class="container">
             <a class="navbar-brand" href="#">E-Shop Admin</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,9 +46,9 @@
                       <?php 
                         session_start(); // Start the session
                         if (isset($_SESSION["firstname"])) {
-                          echo '<a class="nav-link" href="../login/logout.php">Logout</a>';
+                          echo '<a class="nav-link" href="../../login/logout.php">Logout</a>';
                         } else {
-                          echo '<a class="nav-link" href="../login/login.php"><i class="fa fa-user"></i>Login</a>';
+                          echo '<a class="nav-link" href="../../login/login.php"><i class="fa fa-user"></i>Login</a>';
                         }
                       ?>
                     </li>
@@ -52,15 +70,17 @@
     </nav>
 
     <!-- Sidebar -->
-    <div class="bg-dark text-white"  style="width: 250px;">
-            <div class="sidebar-heading p-3">Admin Dashboard</div>
-            <div class="list-group list-group-flush">
-                <a href="../products/main.php" class="list-group-item list-group-item-action bg-dark text-white"><i class="fas fa-home"></i> Home</a>
-                <a href="../products/product.php" class="list-group-item list-group-item-action bg-dark text-white"><i class="fas fa-cube"></i> Products</a>
-                <a href="../coustmor/coustmor.php" class="list-group-item list-group-item-action bg-dark text-white"><i class="fas fa-users"></i> Customers</a>
-                <a href="#" class="list-group-item list-group-item-action bg-dark text-white"><i class="fas fa-shopping-cart"></i> Orders</a>
-            </div>
-        </div>
+  <!-- Sidebar -->
+  <div class="bg-dark text-white" style="width: 250px; position: fixed; top: 0; bottom: 0;">
+      <div class="sidebar-heading p-3">Admin Dashboard</div>
+      <div class="list-group list-group-flush">
+          <a href="../products/main.php" class="list-group-item list-group-item-action bg-dark text-white"><i class="fas fa-home"></i> Home</a>
+          <a href="../products/product.php" class="list-group-item list-group-item-action bg-dark text-white"><i class="fas fa-cube"></i> Products</a>
+          <a href="../coustmor/coustmor.php" class="list-group-item list-group-item-action bg-dark text-white"><i class="fas fa-users"></i> Customers</a>
+          <a href="#" class="list-group-item list-group-item-action bg-dark text-white"><i class="fas fa-shopping-cart"></i> Orders</a>
+      </div>
+  </div>
+
 
 
 

@@ -11,9 +11,8 @@ $products = $stmt->fetchAll();
 <section>
   <div class="container">
     <div class="row mt-4">
-   
       <?php foreach ($products as $product) { ?>
-        <div class="col-md-3 mt-2">
+        <div class="col-md-3 m-3">
         <form method="post" action="../cart/cart.php?id=<?= $product['id']?>">
           <div class="card" style="width: 18rem;">
             <div class="card-header" name="name">
