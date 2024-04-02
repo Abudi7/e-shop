@@ -1,5 +1,6 @@
 <?php
-  if ((isset($_SESSION['role']) && $_SESSION['role'] !== "Role['admin']")) {
+session_start();
+  if ((isset($_SESSION['role']) && $_SESSION['role'] !== "admin")) {
     // Redirect securely using header()
     header("Location: ../../template/main.php");
   } else {

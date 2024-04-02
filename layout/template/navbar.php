@@ -51,7 +51,7 @@
           <a class="nav-link position-relative" href="#" data-bs-toggle="modal" data-bs-target="#shoppingCartModal">
               <i class="fa fa-cart-plus"></i>
               <span id="notification-number">
-                  <?php require_once('../cart/cart.php'); getCountId($db); ?>
+                  <?php require_once('../cart/cart.php'); echo getCountId($db);  ?>
               </span>
           </a>
           <div class="modal fade sidebar-right" id="shoppingCartModal" tabindex="-1" aria-labelledby="shoppingCartModalLabel" aria-hidden="true">
@@ -74,7 +74,7 @@
                           <div class="container">
                               <div class="row">
                                   <div class="col-md-3">
-                                      <img src="../products/products-Image/<?=$viewProduct['img']; ?>" class="img-thumbnail m-1" style="width: 50px; height: 50px;">
+                                      <img src="../admin/products/products-Image/<?=$viewProduct['img']; ?>" class="img-thumbnail m-1" style="width: 50px; height: 50px;">
                                   </div>
                                   <div class="col-md-7">
                                       <p><?= $viewProduct['name'] ?></p>

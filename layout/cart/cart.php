@@ -1,12 +1,28 @@
 <?php 
 
 if (isset($_POST['addToCart'])) {
-  $userId = $_SESSION['id'];
-  if (!$userId) {
-    header("Location: ../template/main.php");
-      // Redirect or display an error message
-      exit("User not authenticated"); 
+  // $userId = $_SESSION['id'];
+  // if (!$userId) {
+  //   header("Location: ../template/main.php");
+  //     // Redirect or display an error message
+  //     exit("User not authenticated"); 
+  // }
+  session_start();
+  require('../../config/datasBase.php');
+  // add to cart without login via session id 
+  $userId = random_int(0,time());
+
+  if (isset($_COOKIE['userId'])) {
+    $userId = (int) $_COOKIE['userId'];
   }
+  
+  if (isset($_SESSION['userId'])) {
+    $userId = (int) $_SESSION['userId'];
+  }
+  
+  setcookie('userId',$userId,strtotime ('+30 days'));
+  $_SESSION['userId'] = $userId;
+  //var_dump($_SESSION); exit();
   $productId = $_REQUEST['id'];
   $amount = 1; // Default amount for each product
     
@@ -31,24 +47,40 @@ if (isset($_POST['addToCart'])) {
       $stmtInsert->execute([$productId, $userId, $amount, $createdTime]);
   }
   
+  // Retrieve the count of items in the cart
+  if (isset($_SESSION['userId'])) {
+    $userId = $_SESSION['userId'];
+    $sql = "SELECT COUNT(id) FROM cart WHERE user_id = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->execute([$userId]);
+    $countCart = $stmt->fetchColumn();
+  } else {
+    $countCart = 0;
+  }
+
+
+  //var_dump($countCart); exit();
+  
   // Redirect securely using header()
   header("Location: ../template/main.php");
   exit();
 }
 
-//count Cart id 
+// Count Cart IDs for the same user
 function getCountId($db) {
-  $userId = $_SESSION['id'];
-  if($userId) {
-    $sql = "SELECT COUNT(id) As countCart FROM cart where user_id = ? ";
-    $stmt = $db->Prepare($sql);
-    $countCart = $stmt->execute([$userId]);
-    $countCart = $stmt->fetchColumn();
-    echo $countCart;
-  } else {
-    echo "0";
-  } 
+      
+      $userId = (int) $_SESSION['userId'];
+      //var_dump($userId);
+      $sql = "SELECT COUNT(id) FROM cart WHERE user_id = ?";
+      $stmt = $db->prepare($sql);
+      $stmt->execute([$userId]);
+      $countCart = $stmt->fetchColumn();
+      //var_dump($countCart); die();
+      return $countCart;
+   
 }
+
+
 
 //total price function 
 function getTotal($db) {

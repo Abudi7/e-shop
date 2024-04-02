@@ -1,6 +1,29 @@
 <?php 
 require('../template/header.php');
 
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Gather form data
+    $firstName = $_POST['firstName'];
+    $lastName = $_POST['lastName'];
+    $email = $_POST['email'];
+    $address = $_POST['address'];
+    $zip = $_POST['zip'];
+    $city = $_POST['city'];
+    $cardNumber = $_POST['cardNumber'];
+    $expiryDate = $_POST['expiryDate'];
+    $cvv = $_POST['cvv'];
+    $orderTotal = getTotal($db); // Assuming you have a function to calculate total
+
+    // Insert data into the orders table
+    $sql = "INSERT INTO orders (firstName, lastName, email, address, zip, city, cardNumber, expiryDate, cvv, orderTotal)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $db->prepare($sql);
+    $stmt->execute([$firstName, $lastName, $email, $address, $zip, $city, $cardNumber, $expiryDate, $cvv, $orderTotal]);
+
+    // Redirect or display a success message
+     header("Location: oreder.php");
+}
 ?>
 <!--Billing Address && Your Order -->
 <section>
@@ -28,12 +51,12 @@ require('../template/header.php');
               <input type="text" class="form-control" id="address" placeholder="123 Main St" required>
             </div>
             <div class="col-md-6">
-              <label for="address2" class="form-label">Address 2 (Optional)</label>
-              <input type="text" class="form-control" id="address2" placeholder="Apartment, studio, or floor">
-            </div>
-            <div class="col-md-6">
               <label for="zip" class="form-label">Zip Code</label>
               <input type="text" class="form-control" id="zip" placeholder="12345" required>
+            </div>
+            <div class="col-md-6">
+              <label for="city" class="form-label">City</label>
+              <input type="text" class="form-control" id="address2" placeholder="Apartment, studio, or floor">
             </div>
           </form>
         </div>
@@ -98,9 +121,24 @@ require('../template/header.php');
           </div>
           <div class="row">
             <div class="col-md-12">
-              <h2>Payment</h2>
+                <h2>Payment</h2>
+                <form method="post" action="fakePayment.php"> <!-- This form will post to a PHP file where you'll implement fake payment logic -->
+                    <div class="mb-3">
+                        <label for="cardNumber" class="form-label">Card Number</label>
+                        <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="expiryDate" class="form-label">Expiry Date</label>
+                        <input type="text" class="form-control" id="expiryDate" name="expiryDate" placeholder="MM/YY" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cvv" class="form-label">CVV</label>
+                        <input type="text" class="form-control" id="cvv" name="cvv" placeholder="123" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Payment</button>
+                </form>
             </div>
-          </div>
+        </div>
         </div>
       </div>
     </div>
