@@ -91,7 +91,7 @@
                           </div>
                         <?php }?>
                       </div>
-                      <p class="border-top m-2">Subtotal: <span style="float: right;"><?= getTotal($db) ?>$</span></p>
+                      <p class="border-top m-2">Subtotal: <span style="float: right;"><?php echo getTotal($db) ?>$</span></p>
                       <div class="modal-footer">
                           <a href="../cart/checkout.php" class="btn btn-primary btn-sm">Checkout</a>
                           <a href="../cart/viewCart.php" class="btn btn-primary btn-sm">View Cart</a>

@@ -44,7 +44,6 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                       <?php 
-                        session_start(); // Start the session
                         if (isset($_SESSION["firstname"])) {
                           echo '<a class="nav-link" href="../../login/logout.php">Logout</a>';
                         } else {

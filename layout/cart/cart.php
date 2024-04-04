@@ -68,7 +68,6 @@ if (isset($_POST['addToCart'])) {
 
 // Count Cart IDs for the same user
 function getCountId($db) {
-      
       $userId = (int) $_SESSION['userId'];
       //var_dump($userId);
       $sql = "SELECT COUNT(id) FROM cart WHERE user_id = ?";

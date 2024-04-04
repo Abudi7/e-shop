@@ -1,30 +1,55 @@
-<?php 
-require('../template/header.php');
-
-// Check if the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Gather form data
-    $firstName = $_POST['firstName'];
-    $lastName = $_POST['lastName'];
-    $email = $_POST['email'];
-    $address = $_POST['address'];
-    $zip = $_POST['zip'];
-    $city = $_POST['city'];
-    $cardNumber = $_POST['cardNumber'];
-    $expiryDate = $_POST['expiryDate'];
-    $cvv = $_POST['cvv'];
-    $orderTotal = getTotal($db); // Assuming you have a function to calculate total
-
-    // Insert data into the orders table
-    $sql = "INSERT INTO orders (firstName, lastName, email, address, zip, city, cardNumber, expiryDate, cvv, orderTotal)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $db->prepare($sql);
-    $stmt->execute([$firstName, $lastName, $email, $address, $zip, $city, $cardNumber, $expiryDate, $cvv, $orderTotal]);
-
-    // Redirect or display a success message
-     header("Location: oreder.php");
+<?php
+$userId = $_SESSION['userId'];
+$userTableId = $_SESSION['id'];
+//var_dump($userTable);exit;
+if ($userId) {
+  // Redirect to login page
+  header("Location: ../login/login.php");
+  exit("user is not logged in ");
 }
+
+require('../template/header.php');
+if ($userId !== $userTableId ) {
+   $sql = "UPDATE cart SET user_id = ? ";
+   $stmt = $db->prepare($sql);
+   $stmt->execute([$userTableId]);
+}
+
+if($userTableId) {
+  //set the data from user in the order Table
+  $stmt = $db->prepare("SELECT * FROM user where id = ?");
+  $stmt->execute([$userTableId]);
+  $userData = $stmt->fetch();
+  var_dump($userData); exit;
+//var_dump($userId); exit;
+
+    // Check if the form is submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Gather form data
+        $firstName = $_POST['firstName'];
+        $lastName = $_POST['lastName'];
+        $email = $_POST['email'];
+        $address = $_POST['address'];
+        $zip = $_POST['zip'];
+        $city = $_POST['city'];
+        $cardNumber = $_POST['cardNumber'];
+        $expiryDate = $_POST['expiryDate'];
+        $cvv = $_POST['cvv'];
+        $orderTotal = getTotal($db); // Assuming you have a function to calculate total
+
+        // Insert data into the orders table
+        $sql = "INSERT INTO orders (firstName, lastName, email, address, zip, city, cardNumber, expiryDate, cvv, orderTotal)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$firstName, $lastName, $email, $address, $zip, $city, $cardNumber, $expiryDate, $cvv, $orderTotal]);
+
+        // Redirect to order confirmation page
+        header("Location: order.php");
+        exit();
+    } }
+  
 ?>
+
 <!--Billing Address && Your Order -->
 <section>
   <div class="container">
@@ -36,15 +61,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <form class="row g-3">
             <div class="col-md-6">
               <label for="firstName" class="form-label">First Name</label>
-              <input type="text" class="form-control" id="firstName" placeholder="John" required>
+              <input type="text" class="form-control" id="firstName" value="<?php echo $userData['firstname'] ?>" required>
             </div>
             <div class="col-md-6">
               <label for="lastName" class="form-label">Last Name</label>
-              <input type="text" class="form-control" id="lastName" placeholder="Doe" required>
+              <input type="text" class="form-control" id="lastName" value="text" required>
             </div>
             <div class="col-12">
               <label for="email" class="form-label">Email (Optional)</label>
-              <input type="email" class="form-control" id="email" placeholder="youremail@example.com">
+              <input type="email" class="form-control" id="email" value="text2">
             </div>
             <div class="col-12">
               <label for="address" class="form-label">Address</label>

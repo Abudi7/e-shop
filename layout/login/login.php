@@ -1,4 +1,8 @@
-<?php include "../template/header.php";?>
+<?php
+ ob_start();// Start output buffering
+include "../template/header.php";
+?>
+
 
 <div class="container">
     <h2 class="bg-primary text-light rounded text-center mt-3">E-Shop Login Page</h2>
