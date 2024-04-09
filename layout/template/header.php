@@ -10,7 +10,7 @@
 </head>
 <body>
 <?php
-  session_start();
+session_start();
 require('../../config/datasBase.php');
 require('../template/navbar.php');
 ?>

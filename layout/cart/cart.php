@@ -20,7 +20,8 @@ if (isset($_POST['addToCart'])) {
     $userId = (int) $_SESSION['userId'];
   }
   
-  setcookie('userId',$userId,strtotime ('+30 days'));
+  // setcookie('userId',$userId,strtotime ('+30 days'));
+  setcookie('userId', $userId);
   $_SESSION['userId'] = $userId;
   //var_dump($_SESSION); exit();
   $productId = $_REQUEST['id'];
@@ -57,10 +58,7 @@ if (isset($_POST['addToCart'])) {
   } else {
     $countCart = 0;
   }
-
-
-  //var_dump($countCart); exit();
-  
+ 
   // Redirect securely using header()
   header("Location: ../template/main.php");
   exit();
@@ -68,6 +66,7 @@ if (isset($_POST['addToCart'])) {
 
 // Count Cart IDs for the same user
 function getCountId($db) {
+      session_start();
       $userId = (int) $_SESSION['userId'];
       //var_dump($userId);
       $sql = "SELECT COUNT(id) FROM cart WHERE user_id = ?";

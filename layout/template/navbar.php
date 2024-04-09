@@ -21,7 +21,6 @@
        </li>
       <li class="nav-item">
         <?php 
-         
           if (isset($_SESSION["firstname"]) != null) {
             echo '<a class="nav-link" href="../login/logout.php">logout</a>';
           } else {
@@ -34,6 +33,7 @@
       </li>
       <li class="nav-item dropend">
         <?php 
+        
           if (isset($_SESSION["firstname"])) {
             echo '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">';
             #echo '<img src="../../image/' . $_SESSION["img"] . '" alt="' . $_SESSION["firstname"] . '" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 5px;">';
