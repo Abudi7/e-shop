@@ -10,19 +10,38 @@ if (isset($_POST['addToCart'])) {
   session_start();
   require('../../config/datasBase.php');
   // add to cart without login via session id 
-  $userId = random_int(0,time());
+ // Initialize the user login status
+$userIsLoggedIn = false;
 
+// Check if the user is logged in
+if (isset($_SESSION['userIsLoggedIn'])) {
+    $userIsLoggedIn = $_SESSION['userIsLoggedIn'];
+}
+
+  // If the user is logged in, set the user ID from the session
+  if ($userIsLoggedIn) {
+      if (isset($_SESSION['userId'])) {
+          $userId = (int) $_SESSION['userId'];
+      }
+  } else {
+      // If the user is not logged in, generate a random user ID
+      $userId = random_int(0, time());
+  }
+
+  // Check if the user is logged in via cookie
   if (isset($_COOKIE['userId'])) {
-    $userId = (int) $_COOKIE['userId'];
+      $userId = (int) $_COOKIE['userId'];
   }
-  
-  if (isset($_SESSION['userId'])) {
-    $userId = (int) $_SESSION['userId'];
-  }
-  
-  // setcookie('userId',$userId,strtotime ('+30 days'));
+
+  // Set the cookie for user ID
   setcookie('userId', $userId);
+
+  // Update session variables
   $_SESSION['userId'] = $userId;
+
+  // Update user login status in session
+  $_SESSION['userIsLoggedIn'] = false; 
+ //var_dump($_SESSION); exit;
   //var_dump($_SESSION); exit();
   $productId = $_REQUEST['id'];
   $amount = 1; // Default amount for each product
@@ -48,16 +67,16 @@ if (isset($_POST['addToCart'])) {
       $stmtInsert->execute([$productId, $userId, $amount, $createdTime]);
   }
   
-  // Retrieve the count of items in the cart
-  if (isset($_SESSION['userId'])) {
-    $userId = $_SESSION['userId'];
-    $sql = "SELECT COUNT(id) FROM cart WHERE user_id = ?";
-    $stmt = $db->prepare($sql);
-    $stmt->execute([$userId]);
-    $countCart = $stmt->fetchColumn();
-  } else {
-    $countCart = 0;
-  }
+  // // Retrieve the count of items in the cart
+  // if (isset($_SESSION['userId'])) {
+  //   $userId = $_SESSION['userId'];
+  //   $sql = "SELECT COUNT(id) FROM cart WHERE user_id = ?";
+  //   $stmt = $db->prepare($sql);
+  //   $stmt->execute([$userId]);
+  //   $countCart = $stmt->fetchColumn();
+  // } else {
+  //   $countCart = 0;
+  // }
  
   // Redirect securely using header()
   header("Location: ../template/main.php");
@@ -66,7 +85,6 @@ if (isset($_POST['addToCart'])) {
 
 // Count Cart IDs for the same user
 function getCountId($db) {
-      session_start();
       $userId = (int) $_SESSION['userId'];
       //var_dump($userId);
       $sql = "SELECT COUNT(id) FROM cart WHERE user_id = ?";

@@ -4,9 +4,10 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 // Check if user is not logged in
-if (!isset($_SESSION['userId'])) {
-  //unset($_SESSION['userId']);
-  // Redirect to login page
+if (isset($_SESSION['userId'])&& $_SESSION['userIsLoggedIn'] === false) {
+  //set the session True
+  $_SESSION['userIsLoggedIn'] = true;
+  //Redirect to login page
   header("Location: ../login/login.php");
   exit("User is not logged in");
 }
@@ -16,14 +17,6 @@ require('../../config/datasBase.php');
 //$userId = $_SESSION['userId'];
 $userTableId = $_SESSION['id'];
 //var_dump($userId); exit();
-// Check if user ID from session matches the one in the cart
-if (isset($userTableId)) {
-  // Update user ID in the cart
-  $sql = "UPDATE cart SET user_id = ?";
-  $stmt = $db->prepare($sql);
-  $stmt->execute([$userTableId]);
-
-}
 
 // Fetch user data
 $stmt = $db->prepare("SELECT * FROM users WHERE id = ?");
@@ -31,7 +24,7 @@ $stmt->execute([$userTableId]);
 $userData = $stmt->fetch();
 
 // Check if the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (isset($_POST['checkout'])) {
   // Gather form data
   $firstName = $_POST['firstName'];
   $lastName = $_POST['lastName'];
@@ -39,9 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $address = $_POST['address'];
   $zip = $_POST['zip'];
   $city = $_POST['city'];
-  $cardNumber = $_POST['cardNumber'];
-  $expiryDate = $_POST['expiryDate'];
-  $cvv = $_POST['cvv'];
+  
   // Validate and sanitize form data
   // For simplicity, you can use htmlspecialchars for basic sanitization
   $firstName = htmlspecialchars($firstName);
@@ -50,10 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $address = htmlspecialchars($address);
   $zip = htmlspecialchars($zip);
   $city = htmlspecialchars($city);
-  $cardNumber = htmlspecialchars($cardNumber);
-  $expiryDate = htmlspecialchars($expiryDate);
-  $cvv = htmlspecialchars($cvv);
-  
+ 
   // Fetch user data
   $stmt = $db->prepare("SELECT * FROM users WHERE id = ?");
   $stmt->execute([$userTableId]);
@@ -62,34 +50,66 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // Fetch total order amount
   require_once('cart.php'); // Assuming getTotal() function is in this file
   $orderTotal = getTotal($db);
+  $orderNumber = rand();
+  $orderDate = new DateTime();
   
-  // Fetch amount and product id from cart
-  $sql = "SELECT cart.amount, products.id
-              FROM cart
-              INNER JOIN products ON cart.product_Id = products.id";
+  // Insert data into the orders table
+  $sql = "INSERT INTO orders (firstName, lastName, email, address, zip, city, orderDate, orderNumber,orderTotal, user_id)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  $stmt = $db->prepare($sql);
+  $stmt->execute([$firstName, $lastName, $email, $address, $zip, $city, $orderDate->format('Y-m-d H:i:s'),  $orderNumber,$orderTotal, $userTableId]);
+
+  // Get the ID of the inserted order
+  $orderId = $db->lastInsertId();
+
+   // Fetch amount and product id from cart
+   $sql = "SELECT cart.amount, products.id, products.name
+            FROM cart
+            INNER JOIN products ON cart.product_Id = products.id";
   $stmt = $db->prepare($sql);
   $stmt->execute();
   $checkouts = $stmt->fetchAll();
-  
+  // Insert data into the order_items table for each product in the cart
   foreach ($checkouts as $checkout) {
-      $productId = $checkout['id'];
-      $amount = $checkout['amount'];
-      $orderDate = new DateTime();
-      
-      // Insert data into the orders table
-      $sql = "INSERT INTO orders (firstName, lastName, email, address, zip, city, cardNumber, expiryDate, cvv, product_id, amount, orderDate, orderTotal, user_id)
-                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-      $stmt = $db->prepare($sql);
-      $stmt->execute(array($firstName, $lastName, $email, $address, $zip, $city, $cardNumber, $expiryDate, $cvv, $productId, $amount, $orderDate->format('y-m-d  H:i'), $orderTotal, $userTableId));
-    }
-  
+  $productId = $checkout['id'];
+  $amount = $checkout['amount'];
+
+  // Insert data into the order_items table
+  $sql = "INSERT INTO order_items (order_id, product_id, amount)
+      VALUES (?, ?, ?)";
+  $stmt = $db->prepare($sql);
+  $stmt->execute(array($orderId, $productId, $amount));
+  }
     //delete cart courp
     $stmt = $db->prepare("DELETE FROM cart");
     $stmt->execute();
-    
-  // Redirect to order confirmation page
-  header('Location: order.php');
-}
+
+    // Send Email 
+    $emailSubject = 'Order Confirmation';
+    $emailBody = "Dear $firstName $lastName,\n\n";
+    $emailBody .= "Thank you for your order!\n\nYour Order number is : $orderNumber \n \n";
+    $emailBody .= "Your order details:\n";
+    foreach ($checkouts as $checkout) {
+        $productName = $checkout['name'];
+        $amount = $checkout['amount'];
+        $emailBody .= "- Product: $productName (ID: $productName), Quantity: $amount\n";
+    }
+    $emailBody .= "\nTotal Amount: $orderTotal $\n\n";
+    $emailBody .= "Your order will be processed shortly.\n\n";
+    $emailBody .= "Regards,\nYour Company";
+
+    // Set additional headers
+    $headers = "From: e-shop@abud-alshalal.com\r\n";
+    $headers .= "Reply-To: yourcompany@example.com\r\n";
+    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+
+    // Send the email
+    $mailSent = mail($email, $emailSubject, $emailBody, $headers);
+
+    // Redirect to order confirmation page
+    header('Location: order.php');
+    exit; 
+    }
 
 require('../template/header.php');
 ?>
@@ -214,7 +234,7 @@ require('../template/header.php');
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">Place Order</button>
+      <button type="submit" name="checkout" class="btn btn-primary">Place Order</button>
     </form>
   </div>
 </section>
