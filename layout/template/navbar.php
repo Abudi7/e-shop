@@ -33,7 +33,6 @@
       </li>
       <li class="nav-item dropend">
         <?php 
-        
           if (isset($_SESSION["firstname"])) {
             echo '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">';
             #echo '<img src="../../image/' . $_SESSION["img"] . '" alt="' . $_SESSION["firstname"] . '" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 5px;">';
@@ -42,6 +41,7 @@
               echo '<ul class="dropdown-menu" aria-labelledby="userDropdown">';
                     echo '<li><a class="dropdown-item" href="http://localhost/e-shop/e-shop/layout/users/edit.php?id=' . $_SESSION["id"] . '">Edit</a></li>';
                     echo '<li><a class="dropdown-item" href="http://localhost/e-shop/e-shop/layout/users/profile.php?id=' . $_SESSION["id"] . '">Profile</a></li>';
+                    echo '<li><a class="dropdown-item" href="http://localhost/e-shop/e-shop/layout/cart/order.php">My Order</a></li>';
               echo '</ul>';
           }
         ?>
