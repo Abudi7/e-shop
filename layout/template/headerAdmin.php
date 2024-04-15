@@ -75,8 +75,8 @@
       <div class="list-group list-group-flush">
           <a href="../products/main.php" class="list-group-item list-group-item-action bg-dark text-white"><i class="fas fa-home"></i> Home</a>
           <a href="../products/product.php" class="list-group-item list-group-item-action bg-dark text-white"><i class="fas fa-cube"></i> Products</a>
-          <a href="../coustmor/coustmor.php" class="list-group-item list-group-item-action bg-dark text-white"><i class="fas fa-users"></i> Customers</a>
-          <a href="#" class="list-group-item list-group-item-action bg-dark text-white"><i class="fas fa-shopping-cart"></i> Orders</a>
+          <a href="../customers/customers.php" class="list-group-item list-group-item-action bg-dark text-white"><i class="fas fa-users"></i> Customers</a>
+          <a href="../analytics/analytics.php" class="list-group-item list-group-item-action bg-dark text-white"><i class="fas fa-chart-bar"></i> Analytics</a>
       </div>
   </div>
 
