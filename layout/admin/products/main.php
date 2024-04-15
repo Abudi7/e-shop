@@ -1,4 +1,10 @@
 <?php
+session_start();
+  if ((isset($_SESSION['role']) && $_SESSION['role'] !== "admin")) {
+    // Redirect securely using header()
+    header("Location: ../../template/main.php");
+  } else {
+
 require('../../template/headerAdmin.php');
 require('../../../config/datasBase.php');
 error_reporting(E_ALL);
@@ -37,4 +43,4 @@ $products = $stmt->fetchAll();
 </section>
 <?php 
 ?>
-<?php require('../../template/footer.php'); ?>
+<?php } require('../../template/footer.php'); ?>

@@ -44,7 +44,7 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                       <?php 
-                        if (isset($_SESSION["firstname"])) {
+                        if ($_SESSION['role'] === "admin") {
                           echo '<a class="nav-link" href="../../login/logout.php">Logout</a>';
                         } else {
                           echo '<a class="nav-link" href="../../login/login.php"><i class="fa fa-user"></i>Login</a>';
@@ -56,7 +56,7 @@
                     </li>
                     <li class="nav-item dropend">
                       <?php 
-                          if (isset($_SESSION["firstname"])) {
+                          if ($_SESSION['role'] === "admin") {
                               echo '<a class="nav-link" href="http://localhost/e-shop/e-shop/layout/users/profile.php?id=' . $_SESSION["id"] . '">';
                               echo "Admin " . $_SESSION["firstname"];
                               echo '</a>';

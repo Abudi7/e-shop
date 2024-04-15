@@ -1,4 +1,10 @@
-<?php 
+<?php
+session_start();
+  if ((isset($_SESSION['role']) && $_SESSION['role'] !== "admin")) {
+    // Redirect securely using header()
+    header("Location: ../../template/main.php");
+  } else {
+
 require('../../../config/datasBase.php');
 require_once('../../template/headerAdmin.php');
 $stmt = $db->prepare('SELECT * FROM users');
@@ -37,4 +43,4 @@ $customers = $stmt->fetchAll();
     </div>
   </div>
 </div>
-<?php require('../../template/footer.php');?>
+<?php } require('../../template/footer.php');?>
