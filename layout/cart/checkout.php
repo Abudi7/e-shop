@@ -50,14 +50,34 @@ if (isset($_POST['checkout'])) {
   // Fetch total order amount
   require_once('cart.php'); // Assuming getTotal() function is in this file
   $orderTotal = getTotal($db);
-  $orderNumber = rand();
+   // Fetch the next available invoice number from the database
+  $stmt = $db->query("SELECT MAX(invoice) AS maxInvoice FROM orders");
+  $maxInvoice = $stmt->fetchColumn();
+
+  // Check if this is the first order
+  if ($maxInvoice === null) {
+      // If it's the first order, start with 845101
+      $invoice = "845101";
+  } else {
+      // Extract the numeric part of the max invoice number
+      $numericPart = substr($maxInvoice, 4); // Extract the XX part
+      $nextNumericPart = intval($numericPart) + 1; // Increment by 1
+
+      // Combine the prefix '8451' with the next numeric part
+      $invoice = "8451" . str_pad($nextNumericPart, 2, '0', STR_PAD_LEFT);
+  }
+
+  // Ensure the invoice number is 8 digits by padding with leading zeros if necessary
+  $invoice = str_pad($invoice, 8, '0', STR_PAD_LEFT);
+
+
   $orderDate = new DateTime();
   
   // Insert data into the orders table
-  $sql = "INSERT INTO orders (firstName, lastName, email, address, zip, city, orderDate, orderNumber,orderTotal, user_id)
+  $sql = "INSERT INTO orders (firstName, lastName, email, address, zip, city, orderDate, invoice ,orderTotal, user_id)
   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
   $stmt = $db->prepare($sql);
-  $stmt->execute([$firstName, $lastName, $email, $address, $zip, $city, $orderDate->format('Y-m-d H:i:s'),  $orderNumber,$orderTotal, $userTableId]);
+  $stmt->execute([$firstName, $lastName, $email, $address, $zip, $city, $orderDate->format('Y-m-d H:i:s'),  $invoice,$orderTotal, $userTableId]);
 
   // Get the ID of the inserted order
   $orderId = $db->lastInsertId();

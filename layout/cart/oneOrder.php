@@ -3,12 +3,11 @@ require("../../config/datasBase.php");
 $id = $_REQUEST['id'];
 $stmt = $db->prepare("SELECT o.*, GROUP_CONCAT(p.name SEPARATOR ', ') AS productNames
                       FROM orders o
-                      INNER JOIN order_items oi ON o.id = oi.order_id
-                      INNER JOIN products p ON oi.product_id = p.id
+                      lEFT JOIN order_items oi ON o.id = oi.order_id
+                      LEFT JOIN products p ON oi.product_id = p.id
                       WHERE o.id=?");
 $stmt->execute([$id]);
 $order = $stmt->fetch();
-$invoice = rand();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,7 +55,7 @@ $invoice = rand();
 <div class="invoice-container">
   <div class="invoice-header">
     <h1 class="bg-primary text-light rounded text-center">E-shop Invoice</h1>
-    <p class="invoice-number">Invoice Number: <?= $invoice ?></p>
+    <p class="invoice-number">Invoice Number: <?= $order['invoice']?></p>
   </div>
   <div class="invoice-details">
     <p>Dear <?= $order['firstName'] ?> <?= $order['lastName'] ?>,</p>

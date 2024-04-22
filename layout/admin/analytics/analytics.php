@@ -48,7 +48,7 @@ $bestSellings = $stmt->fetchAll();
 <?php 
 $stmt = $db->prepare('SELECT o.user_id, u.firstname, u.lastname, COUNT(o.id) AS totalOrders
                       FROM orders o
-                      JOIN users u ON o.user_id = u.id
+                      LEFT JOIN users u ON o.user_id = u.id
                       GROUP BY o.user_id, u.firstname, u.lastname
                       ORDER BY totalOrders DESC
                       LIMIT 5;');
@@ -85,8 +85,8 @@ $topUsers = $stmt->fetchAll();
   <?php
   $stmt = $db->prepare('SELECT o.*, p.name AS productName
                         FROM orders o
-                        JOIN order_items oi ON o.id = oi.order_id
-                        JOIN products p ON oi.product_id = p.id
+                        LEFT JOIN order_items oi ON o.id = oi.order_id
+                        LEFT JOIN products p ON oi.product_id = p.id
                         WHERE o.orderDate >= DATE_SUB(CURRENT_DATE(), INTERVAL 4 WEEK)');
   $stmt->execute();
   $weeks = $stmt->fetchAll();

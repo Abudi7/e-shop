@@ -30,7 +30,7 @@ $orders = $stmt->fetchAll();
           <tbody>
             <?php foreach($orders as $order) {?>
               <tr>
-                <td><a class="text-primary" href="oneOrder.php?id=<?= $order['id'];?>"><?= $order['orderNumber'] ?></a></td>
+                <td><a class="text-primary" href="oneOrder.php?id=<?= $order['id'];?>"><?= $order['invoice'] ?></a></td>
                 <td><?= $order['orderDate'] ?></td>
                 <td><?= $order['orderTotal'] ?> $</td>
                 <td><?= $order['productNames'] ?></td>

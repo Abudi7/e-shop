@@ -56,7 +56,7 @@
                     </li>
                     <li class="nav-item dropend">
                       <?php 
-                          if ($_SESSION['role'] === "admin") {
+                          if ($_SESSION['firstname']) {
                               echo '<a class="nav-link" href="http://localhost/e-shop/e-shop/layout/users/profile.php?id=' . $_SESSION["id"] . '">';
                               echo "Admin " . $_SESSION["firstname"];
                               echo '</a>';
