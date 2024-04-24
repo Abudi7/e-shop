@@ -60,8 +60,8 @@ if (isset($_POST['checkout'])) {
       $invoice = "845101";
   } else {
       // Extract the numeric part of the max invoice number
-      $numericPart = substr($maxInvoice, 4); // Extract the XX part
-      $nextNumericPart = intval($numericPart) + 1; // Increment by 1
+      $numericPart = substr($maxInvoice, 4); 
+      $nextNumericPart = intval($numericPart) + 1; 
 
       // Combine the prefix '8451' with the next numeric part
       $invoice = "8451" . str_pad($nextNumericPart, 2, '0', STR_PAD_LEFT);
